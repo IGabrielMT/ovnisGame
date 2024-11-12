@@ -40,7 +40,7 @@ public class MainFrame extends JFrame implements Interfaces.View {
     }
 
     private void initTimer() {
-        timer = new Timer(666, e -> GamePanel.getInstance(presenter).setUfos(new CopyOnWriteArrayList<>()));
+        timer = new Timer(50, e -> GamePanel.getInstance(presenter).setUfos(new CopyOnWriteArrayList<>()));
     }
 
     public static MainFrame getInstance() {
