@@ -7,7 +7,6 @@ import lombok.SneakyThrows;
 
 import javax.swing.*;
 import java.awt.*;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -18,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 @Getter
 @Setter
 public class SimOvniPlayArea implements Interfaces.Model {
-    private final int X_POSITION_GOAL = 400;
+    private final int X_POSITION_GOAL = 368;
     private final int Y_POSITION_GOAL = 20;
     private final int WIDTH_GOAL = 100;
     private final int HEIGHT_GOAL = 37;
@@ -169,8 +168,8 @@ public class SimOvniPlayArea implements Interfaces.Model {
         }).start();
     }
     private boolean conditionGoal(Ufo ufo){
-        return ufo.getOvni().getX() > X_POSITION_GOAL - WIDTH_GOAL  - 20 && ufo.getOvni().getX() < X_POSITION_GOAL + WIDTH_GOAL + 20
-            && ufo.getOvni().getY() > 20 && ufo.getOvni().getY() < HEIGHT_GOAL + 10;
+        return ufo.getOvni().getX() > X_POSITION_GOAL - WIDTH_GOAL && ufo.getOvni().getX() < X_POSITION_GOAL + 30
+            && ufo.getOvni().getY() > 0 && ufo.getOvni().getY() < HEIGHT_GOAL + Y_POSITION_GOAL;
     }
 
     @Override

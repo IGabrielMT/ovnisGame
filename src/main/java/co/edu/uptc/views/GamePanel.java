@@ -13,6 +13,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class GamePanel extends JPanel {
     private static GamePanel instance;
+    @Setter
     private Point selectedUfo;
     private final Interfaces.Presenter presenter;
     @Setter
@@ -87,7 +88,7 @@ public class GamePanel extends JPanel {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        paintUfos(MainFrame.getInstance().getOvniTypeComboBox().getSelectedItem().toString(), g2d);
+        paintUfos(Objects.requireNonNull(MainFrame.getInstance().getOvniTypeComboBox().getSelectedItem()).toString(), g2d);
     }
     private void paintUfos(String caseName, Graphics2D g2d) {
         for (Point ufo : ufos) {
@@ -117,7 +118,6 @@ public class GamePanel extends JPanel {
         }
     }
 
-
     public void resetGamePanel() {
         SwingUtilities.invokeLater(() -> {
             ufos.clear();
@@ -132,6 +132,8 @@ public class GamePanel extends JPanel {
                 remove(comp);
             }
         }
+        goals.setLocation(goalPoint);
+        goals.setVisible(true);
         add(goals);
     }
 

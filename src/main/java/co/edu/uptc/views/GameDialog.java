@@ -94,9 +94,9 @@ public class GameDialog extends JDialog {
         addTitleLabel(panel, "Instrucciones");
         String[] instructions = {
                 "Click izquierdo: Seleccionar ovni",
-                "Click derecho: Agregar punto de trayectoria"
+                "Click derecho: Agregar punto de trayectoria",
+                "Click derecho de nuevo: Mover"
         };
-
         for (String instruction : instructions) {
             panel.add(createStyledLabel(instruction));
         }
