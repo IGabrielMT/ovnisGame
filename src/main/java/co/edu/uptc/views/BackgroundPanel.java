@@ -1,7 +1,12 @@
 package co.edu.uptc.views;
 
+import javazoom.jl.player.Player;
+import lombok.Setter;
+
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -11,6 +16,10 @@ public class BackgroundPanel extends JPanel {
     private final Random random;
     private float ufoHoverOffset = 0;
     private double time = 0;
+    @Setter
+    private Clip backgroundMusic;
+    private Player player;
+
 
     private final int DEFAULT_WIDTH = 800;
     private final int DEFAULT_HEIGHT = 600;
@@ -55,9 +64,9 @@ public class BackgroundPanel extends JPanel {
         random = new Random();
         stars = new ArrayList<>();
         setPreferredSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
-
         initializeStars();
         setupAnimation();
+        setupMusic();
     }
 
     private void initializeStars() {
@@ -66,6 +75,26 @@ public class BackgroundPanel extends JPanel {
             stars.add(new Star());
         }
     }
+    private void setupMusic() {
+        try {
+            InputStream musicStream = getClass().getResourceAsStream("/music/Chad Crouch - Space.mp3");
+            if (musicStream != null) {
+                player = new Player(musicStream);
+                new Thread(() -> {
+                    try {
+                        player.play();
+                    } catch (Exception e) {
+                        System.out.println("No se pudo reproducir la música: " + e.getMessage());
+                    }
+                }).start();
+            } else {
+                System.out.println("El archivo de música no se encontró en el classpath.");
+            }
+        } catch (Exception e) {
+            System.out.println("No se pudo cargar la música: " + e.getMessage());
+        }
+    }
+
 
     private void setupAnimation() {
         animationTimer = new Timer(33, e -> {
@@ -155,16 +184,31 @@ public class BackgroundPanel extends JPanel {
             animationTimer.stop();
         }
     }
+    public void startMusic() {
+        if (backgroundMusic != null && !backgroundMusic.isRunning()) {
+            backgroundMusic.start();
+        }
+    }
+
+    public void stopMusic() {
+        if (backgroundMusic != null && backgroundMusic.isRunning()) {
+            backgroundMusic.stop();
+        }
+    }
+
+
 
     @Override
     public void addNotify() {
         super.addNotify();
         startAnimation();
+        startMusic();
     }
 
     @Override
     public void removeNotify() {
         super.removeNotify();
         stopAnimation();
+        stopMusic();
     }
 }
